@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="light_gray">#ffe0e0e0</color>
+    <color name="dark_gray">#ff777777</color>
+    <color name="white_transparent">#DDFFFFFF</color>
+    <color name="light_gray_transparent">#33e0e0e0</color>
+    <color name="black_light">#dddddddd</color>
+    <color name="black">#ff000000</color>
+    <color name="black_transparent">#aa000000</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="tab_selected">#ff0069d1</color>
+</resources>

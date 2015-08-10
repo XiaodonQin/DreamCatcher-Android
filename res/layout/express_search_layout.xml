@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout android:id="@+id/input_express_no_layout"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="@dimen/tab_search_content_padding"
+                  android:orientation="horizontal">
+        <ImageView
+                android:layout_width="@dimen/main_title_height"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_barcode"
+                android:scaleType="centerInside"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/abs__textfield_search_selected_holo_light"
+                android:hint="@string/express_search_hint_code_text"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:inputType="number"/>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/input_express_company_layout"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="@dimen/tab_search_content_padding"
+                  android:orientation="horizontal">
+        <ImageView
+                android:layout_width="@dimen/main_title_height"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_search_car"
+                android:scaleType="centerInside"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/abs__textfield_search_selected_holo_light"
+                android:hint="@string/express_search_hint_company_text"
+                android:layout_gravity="bottom"
+                android:gravity="center"/>
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/express_search_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/express_search_button_height"
+            android:layout_marginLeft="@dimen/tab_search_content_padding"
+            android:layout_marginRight="@dimen/tab_search_content_padding"
+            android:layout_marginTop="@dimen/tab_search_content_padding_top"
+            android:background="@drawable/search_button_bg"
+            android:text="@string/express_search_title"
+            android:textSize="@dimen/express_search_button_text_size"
+            android:textColor="@color/black_transparent"
+            android:textStyle="bold"/>
+
+</LinearLayout>

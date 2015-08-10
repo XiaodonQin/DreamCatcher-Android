@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MainTitle">
+        <item name="android:layout_height">@dimen/main_title_height</item>
+        <item name="android:background">@drawable/actionbar_bg_v19</item>
+    </style>
+
+    <style name="TitleText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white_transparent</item>
+        <item name="android:textSize">@dimen/title_text_size</item>
+        <item name="android:layout_marginBottom">@dimen/title_content_padding</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="MyFragmentTab" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/tab_text_color</item>
+        <item name="android:textSize">@dimen/fragment_tab_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:singleLine">true</item>
+    </style>
+</resources>

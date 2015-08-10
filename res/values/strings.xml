@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dream Catcher</string>
+    <string name="default_title">Dream Catcher</string>
+
+    <string name="weixin_title">WeChat</string>
+    <string name="weibo_title">Weibo</string>
+    <string name="tencent_title">Tencent</string>
+    <string name="douban_title">Douban</string>
+    <string name="express_title">Express</string>
+    <string name="express_search_title">Search</string>
+    <string name="express_my_title">My Express</string>
+
+    <string name="express_search_hint_code_text">Input express code</string>
+    <string name="express_search_hint_company_text">Choose express company</string>
+</resources>
