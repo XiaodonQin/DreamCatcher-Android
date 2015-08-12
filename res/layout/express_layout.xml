@@ -19,6 +19,12 @@
                 style="@style/MyFragmentTab"
                 android:text="@string/express_my_title"/>
     </LinearLayout>
+    <ImageView
+            android:id="@+id/cursor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="matrix"
+            android:src="@drawable/tab_indicator_bg" />
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/one_dp"

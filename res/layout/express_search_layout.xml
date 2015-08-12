@@ -15,14 +15,15 @@
                 android:src="@drawable/img_barcode"
                 android:scaleType="centerInside"/>
 
-        <EditText
+        <EditText android:id="@+id/input_express_code_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/abs__textfield_search_selected_holo_light"
                 android:hint="@string/express_search_hint_code_text"
                 android:layout_gravity="bottom"
                 android:gravity="center"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:singleLine="true"/>
     </LinearLayout>
 
     <LinearLayout android:id="@+id/input_express_company_layout"
@@ -36,13 +37,16 @@
                 android:src="@drawable/img_search_car"
                 android:scaleType="centerInside"/>
 
-        <EditText
+        <EditText android:id="@+id/input_express_company_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/abs__textfield_search_selected_holo_light"
                 android:hint="@string/express_search_hint_company_text"
                 android:layout_gravity="bottom"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:singleLine="true"
+                android:editable="false"
+                android:clickable="true"/>
     </LinearLayout>
 
     <Button

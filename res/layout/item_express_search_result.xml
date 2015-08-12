@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="@dimen/tab_search_content_padding">
+    <TextView android:id="@+id/express_time"
+              android:layout_width="wrap_content"
+              android:layout_height="@dimen/main_title_height"
+              android:gravity="center"/>
+
+    <TextView android:id="@+id/express_data"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/main_title_height"
+              android:gravity="center_vertical"
+              android:layout_marginLeft="@dimen/express_search_result_margin"/>
+
+</LinearLayout>

@@ -13,4 +13,8 @@
 
     <string name="express_search_hint_code_text">Input express code</string>
     <string name="express_search_hint_company_text">Choose express company</string>
+
+    <string name="express_search_result_title">Search Result</string>
+    <string name="loading">loading...</string>
+    <string name="express_code_info">运单号：%1$s</string>
 </resources>

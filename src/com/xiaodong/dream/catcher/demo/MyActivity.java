@@ -10,6 +10,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import com.xiaodong.dream.catcher.demo.douban.DoubanFragment;
 import com.xiaodong.dream.catcher.demo.express.ExpressFragment;
+import com.xiaodong.dream.catcher.demo.manager.ClientManager;
 import com.xiaodong.dream.catcher.demo.tencent.TencentFragment;
 import com.xiaodong.dream.catcher.demo.weibo.WeiboFragment;
 import com.xiaodong.dream.catcher.demo.weixin.WeixinFragment;
@@ -46,6 +47,9 @@ public class MyActivity extends FragmentActivity implements MyFragment.OnSetMain
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        //init client manager
+        ClientManager.init(this.getApplicationContext());
 
         initView();
     }
