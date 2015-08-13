@@ -82,11 +82,13 @@ public class ExpressInfo {
         sb.append(", condition=").append(this.condition);
         sb.append(", state=").append(this.state);
         sb.append(", data[");
-        for (LogisticsItem item : data){
-            sb.append("{time=").append(item.getTime());
-            sb.append(", context=").append(item.getContext());
-            sb.append(", ftime=").append(item.getFtime());
-            sb.append("},");
+        if(this.data != null){
+            for (LogisticsItem item : data){
+                sb.append("{time=").append(item.getTime());
+                sb.append(", context=").append(item.getContext());
+                sb.append(", ftime=").append(item.getFtime());
+                sb.append("},");
+            }
         }
         sb.append("]}");
 

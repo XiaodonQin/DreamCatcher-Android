@@ -41,3 +41,26 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.name
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/copyright/profiles_settings.xml
+.idea/workspace.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
+.idea/libraries/libs.xml
+gen/com/xiaodong/dream/catcher/demo/Manifest.java
+gen/com/xiaodong/dream/catcher/demo/BuildConfig.java
+*.class
+*.apk
+project.properties
+gen/com/xiaodong/dream/catcher/demo/R.java
+ant.properties
+build.xml
+proguard-project.txt
+local.properties
+DreamCatcher-Android.iml
+out/production/DreamCatcher-Android/sdk-client.properties

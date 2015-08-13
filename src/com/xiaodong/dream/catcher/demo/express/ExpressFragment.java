@@ -85,8 +85,8 @@ public class ExpressFragment extends MyFragment {
         mMyExpressTabView = (TextView) mRootView.findViewById(R.id.express_my_tab);
 
         mSearchTabView.setSelected(true);
-        mSearchTabView.setOnClickListener(tabClickListener);
-        mMyExpressTabView.setOnClickListener(tabClickListener);
+        mSearchTabView.setOnClickListener(new MyOnClickListener(0));
+        mMyExpressTabView.setOnClickListener(new MyOnClickListener(1));
 
         mViewPager = (ViewPager) mRootView.findViewById(R.id.express_main_container);
 
@@ -130,55 +130,20 @@ public class ExpressFragment extends MyFragment {
         cursor.setImageMatrix(matrix);// 设置动画初始位置
     }
 
-    View.OnClickListener tabClickListener = new View.OnClickListener() {
-        int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
+    public class MyOnClickListener implements View.OnClickListener{
+        private int index = 0;
+
+        public MyOnClickListener(int i) {
+            index = i;
+        }
 
         @Override
         public void onClick(View v) {
+            if(mViewPager != null)
+                mViewPager.setCurrentItem(index);
 
-            Animation animation = null;
-
-            switch (v.getId()){
-                case R.id.express_search_tab:
-                    mSearchTabView.setSelected(true);
-                    mMyExpressTabView.setSelected(false);
-
-                    Log.i(TAG, ">>mSelectedItem:" + mSelectedItem);
-
-                    switch (mSelectedItem){
-                        case ExpressFragmentViewPagerAdapter.ITEM_MY_EXPRESS_FRAGMENT:
-                            animation = new TranslateAnimation(one, 0, 0, 0);
-                            break;
-                    }
-
-                    mSelectedItem = ExpressFragmentViewPagerAdapter.ITEM_SEARCH_FRAGMENT;
-                    mViewPager.setCurrentItem(mSelectedItem);
-                    break;
-                case R.id.express_my_tab:
-                    mSearchTabView.setSelected(false);
-                    mMyExpressTabView.setSelected(true);
-
-                    Log.i(TAG, ">>mSelectedItem:" + mSelectedItem);
-
-
-                    switch (mSelectedItem){
-                        case ExpressFragmentViewPagerAdapter.ITEM_SEARCH_FRAGMENT:
-                            animation = new TranslateAnimation(0, one, 0, 0);
-                            break;
-                    }
-
-                    mSelectedItem = ExpressFragmentViewPagerAdapter.ITEM_MY_EXPRESS_FRAGMENT;
-                    mViewPager.setCurrentItem(mSelectedItem);
-                    break;
-            }
-
-            if(animation != null){
-                animation.setFillAfter(true);// True:图片停在动画结束位置
-                animation.setDuration(300);
-                cursor.startAnimation(animation);
-            }
         }
-    };
+    }
 
     @Override
     public void onResume() {
@@ -234,7 +199,6 @@ public class ExpressFragment extends MyFragment {
                     }
 
                     mSelectedItem = ExpressFragmentViewPagerAdapter.ITEM_MY_EXPRESS_FRAGMENT;
-
 
                     break;
             }
