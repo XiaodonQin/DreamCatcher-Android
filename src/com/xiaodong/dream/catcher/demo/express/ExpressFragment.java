@@ -25,6 +25,7 @@ import com.xiaodong.dream.catcher.demo.MyFragment;
 import com.xiaodong.dream.catcher.demo.R;
 import com.xiaodong.dream.catcher.demo.express.myexpress.MyExpressFragment;
 import com.xiaodong.dream.catcher.demo.express.search.SearchExpressFragment;
+import com.xiaodong.dream.catcher.demo.utils.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,18 +49,15 @@ public class ExpressFragment extends MyFragment {
 
     private OnSetMainTitleListener setMainTitleListener;
 
-    private ImageView cursor;// 动画图片
+    private ImageView cursor;// animation picture
 
-    private int offset = 0;// 动画图片偏移量
-    private int currIndex = 0;// 当前页卡编号
-    private int bmpW;// 动画图片宽度
+    private int offset = 0;// offset for animation
+    private int bmpW;// width of animation picture
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.i(TAG, ">>onCreate");
 
         mActivity = getActivity();
         setMainTitleListener = (OnSetMainTitleListener) mActivity;
@@ -70,24 +68,52 @@ public class ExpressFragment extends MyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, ">>onCreateView");
-
         mRootView = inflater.inflate(R.layout.express_layout, container, false);
-        initView();
 
-        InitImageView();
+        initTabView();
+        initImageView();
+        initViewPager();
+
+        new AsyncTask<Void,Void,Void>(){
+            @Override
+            protected Void doInBackground(Void... params) {
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                mViewPager.setCurrentItem(0);
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         return mRootView;
     }
 
-    private void initView(){
+    private void initTabView(){
         mSearchTabView = (TextView) mRootView.findViewById(R.id.express_search_tab);
         mMyExpressTabView = (TextView) mRootView.findViewById(R.id.express_my_tab);
 
         mSearchTabView.setSelected(true);
         mSearchTabView.setOnClickListener(new MyOnClickListener(0));
         mMyExpressTabView.setOnClickListener(new MyOnClickListener(1));
+    }
 
+    /**
+     * init animation
+     */
+    private void initImageView() {
+        cursor = (ImageView) mRootView.findViewById(R.id.cursor);
+        bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.tab_indicator_bg)
+                .getWidth();// get the width of animation picture
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int screenW = dm.widthPixels;// get width of screen
+        offset = (screenW / 2 - bmpW) / 2;// offset
+        Matrix matrix = new Matrix();
+        matrix.postTranslate(offset, 0);
+        cursor.setImageMatrix(matrix);// set the start position
+    }
+
+    private void initViewPager(){
         mViewPager = (ViewPager) mRootView.findViewById(R.id.express_main_container);
 
         Fragment mFragment1 = new SearchExpressFragment();
@@ -100,34 +126,6 @@ public class ExpressFragment extends MyFragment {
 
         mViewPager.setAdapter(expressFragmentViewPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPagerChangeListener());
-    }
-
-    /**
-     * 初始化动画
-     */
-    private void InitImageView() {
-        cursor = (ImageView) mRootView.findViewById(R.id.cursor);
-        bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.tab_indicator_bg)
-                .getWidth();// 获取图片宽度
-        DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int screenW = dm.widthPixels;// 获取分辨率宽度
-        offset = (screenW / 2 - bmpW) / 2;// 计算偏移量
-        Matrix matrix = new Matrix();
-
-        Log.i(TAG, ">>mSelectedItem:" + mSelectedItem);
-
-        switch (mSelectedItem){
-            case ExpressFragmentViewPagerAdapter.ITEM_SEARCH_FRAGMENT:
-                matrix.postTranslate(offset, 0);
-                break;
-
-            case ExpressFragmentViewPagerAdapter.ITEM_MY_EXPRESS_FRAGMENT:
-                matrix.postTranslate(offset + screenW/2, 0);
-                break;
-
-        }
-        cursor.setImageMatrix(matrix);// 设置动画初始位置
     }
 
     public class MyOnClickListener implements View.OnClickListener{
@@ -156,26 +154,20 @@ public class ExpressFragment extends MyFragment {
     }
 
     public class ViewPagerChangeListener implements ViewPager.OnPageChangeListener{
-        int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
+        int one = offset * 2 + bmpW;// offset from first tab to second tab
 
         @Override
         public void onPageScrolled(int i, float v, int i2) {
-            Log.i(TAG, ">>onPageScrolled");
-
         }
 
         @Override
         public void onPageSelected(int i) {
-            Log.e(TAG, ">>onPageSelected: " + i);
-
             Animation animation = null;
 
             switch (i){
                 case ExpressFragmentViewPagerAdapter.ITEM_SEARCH_FRAGMENT:
                     mSearchTabView.setSelected(true);
                     mMyExpressTabView.setSelected(false);
-
-                    Log.i(TAG, ">>mSelectedItem:" + mSelectedItem);
 
                     switch (mSelectedItem){
                         case ExpressFragmentViewPagerAdapter.ITEM_MY_EXPRESS_FRAGMENT:
@@ -190,8 +182,6 @@ public class ExpressFragment extends MyFragment {
                     mSearchTabView.setSelected(false);
                     mMyExpressTabView.setSelected(true);
 
-                    Log.i(TAG, ">>mSelectedItem:" + mSelectedItem);
-
                     switch (mSelectedItem){
                         case ExpressFragmentViewPagerAdapter.ITEM_SEARCH_FRAGMENT:
                             animation = new TranslateAnimation(0, one, 0, 0);
@@ -204,7 +194,7 @@ public class ExpressFragment extends MyFragment {
             }
 
             if(animation != null){
-                animation.setFillAfter(true);// True:图片停在动画结束位置
+                animation.setFillAfter(true);// True:set picture on the end of annimation
                 animation.setDuration(300);
                 cursor.startAnimation(animation);
             }else {
@@ -216,8 +206,6 @@ public class ExpressFragment extends MyFragment {
 
         @Override
         public void onPageScrollStateChanged(int i) {
-            Log.i(TAG, ">>onPageScrollStateChanged");
-
         }
     }
 }
