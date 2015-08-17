@@ -11,13 +11,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.xiaodong.dream.catcher.demo.express.search.OnSearchRecordListener;
 
 /**
  * TODO
  *
  * @author Xiaodong
  */
-public class MyExpressFragment extends Fragment{
+public class MyExpressFragment extends Fragment implements OnSearchRecordListener{
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,5 +29,10 @@ public class MyExpressFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onRecord(String postId, String type) {
+
     }
 }

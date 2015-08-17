@@ -35,10 +35,4 @@
               android:gravity="center"
               android:singleLine="true"
               android:text="@string/default_title"/>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/one_dp"
-            android:background="@color/black_light"
-            android:layout_alignParentBottom="true"/>
 </RelativeLayout>

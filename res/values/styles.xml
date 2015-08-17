@@ -2,7 +2,7 @@
 <resources>
     <style name="MainTitle">
         <item name="android:layout_height">@dimen/main_title_height</item>
-        <item name="android:background">@drawable/actionbar_bg_v19</item>
+        <item name="android:background">@drawable/actionbar_bg</item>
     </style>
 
     <style name="TitleText">

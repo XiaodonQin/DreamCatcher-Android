@@ -17,4 +17,7 @@
     <string name="express_search_result_title">Search Result</string>
     <string name="loading">loading...</string>
     <string name="express_code_info">运单号：%1$s</string>
+    <string name="prompt_input_express_code_company">Please input express code and company name</string>
+
+    <string name="express_company_sfsy">顺丰速运</string>
 </resources>

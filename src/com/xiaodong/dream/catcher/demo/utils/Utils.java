@@ -110,6 +110,9 @@ public class Utils {
     }
 
     public static List<LogisticsItem> parseLogisticsToList(LogisticsItem[] items){
+        if(items == null){
+            return null;
+        }
         List<LogisticsItem> logisticsItemList = new ArrayList<LogisticsItem>();
 
         for (LogisticsItem item : items){

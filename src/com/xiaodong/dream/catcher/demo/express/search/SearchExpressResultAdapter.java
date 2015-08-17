@@ -39,7 +39,10 @@ public class SearchExpressResultAdapter extends BaseAdapter{
 
     public void addData(List<LogisticsItem> items){
         logisticsItemList.clear();
-        logisticsItemList.addAll(items);
+
+        if(items != null){
+            logisticsItemList.addAll(items);
+        }
 
         notifyDataSetChanged();
     }

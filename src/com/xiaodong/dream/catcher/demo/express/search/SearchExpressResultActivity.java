@@ -17,15 +17,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.xiaodong.dream.catcher.demo.R;
+import com.xiaodong.dream.catcher.demo.sdk.model.LogisticsItem;
 import com.xiaodong.dream.catcher.demo.utils.Utils;
 import com.xiaodong.dream.catcher.demo.sdk.model.ExpressInfo;
+
+import java.util.List;
 
 /**
  * TODO
  *
  * @author Xiaodong
  */
-public class SearchExpressResultActivity extends FragmentActivity implements AdapterView.OnItemClickListener{
+public class SearchExpressResultActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
     private static String TAG = "SearchExpressResultActivity";
 
     public static String SEARCH_TYPE = "search_type";
@@ -44,7 +47,6 @@ public class SearchExpressResultActivity extends FragmentActivity implements Ada
     private SearchExpressResultAdapter searchExpressResultAdapter;
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,16 +59,18 @@ public class SearchExpressResultActivity extends FragmentActivity implements Ada
 
         showProgressDialog();
 
-        new SearchExpressTask(this){
+        new SearchExpressTask(this) {
             @Override
             protected void onPostExecute(ExpressInfo expressInfo) {
                 super.onPostExecute(expressInfo);
                 Log.i(TAG, ">>Search Result");
-                if(expressInfo != null){
+                if (expressInfo != null) {
                     Log.i(TAG, expressInfo.toString());
-                    if (searchExpressResultAdapter != null )
-                        searchExpressResultAdapter.addData(Utils.parseLogisticsToList(expressInfo.getData()));
-                }else {
+                    if (searchExpressResultAdapter != null) {
+                        List<LogisticsItem> itemList = Utils.parseLogisticsToList(expressInfo.getData());
+                        searchExpressResultAdapter.addData(itemList);
+                    }
+                } else {
                     Log.e(TAG, "expressInfo is null");
                 }
 
@@ -78,17 +82,17 @@ public class SearchExpressResultActivity extends FragmentActivity implements Ada
 
     }
 
-    private void getIntentExtras(){
+    private void getIntentExtras() {
         Intent mIntent = getIntent();
         Bundle bundle = mIntent.getExtras();
 
-        if(bundle != null){
+        if (bundle != null) {
             searchType = bundle.getString(SEARCH_TYPE);
             searchPostId = bundle.getString(SEARCH_POSTID);
         }
     }
 
-    private void initView(){
+    private void initView() {
         mBackButton = (ImageView) findViewById(R.id.back_btn);
         mBackButton.setVisibility(View.VISIBLE);
         mBackButton.setOnClickListener(new View.OnClickListener() {
@@ -119,14 +123,14 @@ public class SearchExpressResultActivity extends FragmentActivity implements Ada
 
     }
 
-    private void showProgressDialog(){
+    private void showProgressDialog() {
         mProgressDialog = ProgressDialog.show(this, null, getResources().getString(R.string.loading));
         mProgressDialog.setCancelable(false);
     }
 
-    private void hideProgressDialog(){
-        if(mProgressDialog != null){
-            if (mProgressDialog.isShowing()){
+    private void hideProgressDialog() {
+        if (mProgressDialog != null) {
+            if (mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
         }
