@@ -3,7 +3,7 @@
           package="com.xiaodong.dream.catcher.demo"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="8"/>
+    <uses-sdk android:minSdkVersion="10"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application android:label="@string/app_name" android:icon="@drawable/logo">
@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".express.search.SearchExpressResultActivity"
+        <activity android:name=".dreamcatcher.express.search.SearchExpressResultActivity"
                 android:screenOrientation="portrait"/>
     </application>
 </manifest>
