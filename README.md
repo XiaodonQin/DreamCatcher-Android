@@ -5,6 +5,7 @@
 
 # Dependencies
 
+```javascript
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.1'
@@ -14,6 +15,7 @@ dependencies {
     compile 'com.mikepenz:octicons-typeface:2.2.0@aar'
     compile 'com.android.support:support-v4:22.2.1'
 }
+```
 
 # Preview
 
