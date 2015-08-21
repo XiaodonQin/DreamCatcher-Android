@@ -22,6 +22,7 @@
     <string name="express_company_sfsy">顺丰速运</string>
 
     <!-- Drawer Items -->
+    <string name="drawer_item_home">Home</string>
     <string name="drawer_item_swiftsync">SwiftSync</string>
     <string name="drawer_item_storeshare">Store &amp; Share</string>
     <string name="drawer_item_swiftmedia">SwiftMedia</string>
