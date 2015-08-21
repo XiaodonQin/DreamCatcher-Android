@@ -3,6 +3,12 @@
 - Provide the easiest possible implementation of a navigation drawer for application
 - According to Material Design
 
+# Use Android Technology
+
+- FragmentTabHost + ViewPager + Fragment
+- Toolbar
+- Material Design
+
 # Dependencies
 
 ```javascript
