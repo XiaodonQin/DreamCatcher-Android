@@ -1,5 +1,7 @@
 package com.xiaodong.dream.catcher.demo;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -98,7 +100,8 @@ public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMai
                         new PrimaryDrawerItem().withName(R.string.drawer_item_swiftsms).withIcon(R.drawable.logo_swiftsms).withIdentifier(7).withCheckable(false),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_dreamcatcher).withIcon(R.drawable.logo).withIdentifier(8).withCheckable(false),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(GoogleMaterial.Icon.gmd_settings).withIdentifier(9).withCheckable(false)
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(GoogleMaterial.Icon.gmd_settings).withIdentifier(9).withCheckable(false),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_opensource).withIcon(FontAwesome.Icon.faw_github).withIdentifier(10).withCheckable(false)
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -110,8 +113,14 @@ public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMai
                         //those items don't contain a drawerItem
 
                         if (drawerItem != null) {
-                            changeFragment(drawerItem);
-                            result.setSelectionByIdentifier(drawerItem.getIdentifier(), false);
+                            if (drawerItem.getIdentifier() != 10) {
+                                changeFragment(drawerItem);
+                                result.setSelectionByIdentifier(drawerItem.getIdentifier(), false);
+                            } else {
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/XiaodonQin/DreamCatcher-Android"));
+                                startActivity(browserIntent);
+                            }
+
                         }
 
                         return false;
