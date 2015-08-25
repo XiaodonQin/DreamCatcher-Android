@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Dream Catcher</string>
-    <string name="default_title">Dream Catcher</string>
+    <string name="app_name">DreamCatcher</string>
+    <string name="default_title">DreamCatcher</string>
 
+    <!-- express info -->
     <string name="weixin_title">WeChat</string>
     <string name="weibo_title">Weibo</string>
     <string name="tencent_title">Tencent</string>
@@ -10,15 +11,12 @@
     <string name="express_title">Express</string>
     <string name="express_search_title">Search</string>
     <string name="express_my_title">My Express</string>
-
     <string name="express_search_hint_code_text">Input express code</string>
     <string name="express_search_hint_company_text">Choose express company</string>
-
     <string name="express_search_result_title">Search Result</string>
     <string name="loading">loading...</string>
     <string name="express_code_info">运单号：%1$s</string>
     <string name="prompt_input_express_code_company">Please input express code and company name</string>
-
     <string name="express_company_sfsy">顺丰速运</string>
 
     <!-- Drawer Items -->
@@ -29,7 +27,46 @@
     <string name="drawer_item_viewstream">Viewstream</string>
     <string name="drawer_item_escape">Escape</string>
     <string name="drawer_item_swiftsms">SwiftSMS</string>
-    <string name="drawer_item_dreamcatcher">Dream Catcher</string>
+    <string name="drawer_item_dreamcatcher">DreamCatcher</string>
     <string name="drawer_item_settings">Settings</string>
     <string name="drawer_item_opensource">Open Source</string>
+
+    <!-- recycler header description -->
+    <string name="version">Version</string>
+    <string name="about_description_text">
+        <![CDATA[This is a small sample which including some other applications.<br /><b>You can style this with html markup :D</b>]]>
+    </string>
+    <string name="about_swiftsync_description_text">
+        <![CDATA[Enhanced storage of all types of data with automatic backup, data encryption, multi-folder syncing, and file de-duplication on the cloud;<br /><br />
+        Access the cloud at home, the office, or anywhere on any PC or mobile devices with an Internet connection;<br /><br />
+        Share your documents and files with colleagues and friends privately with read and edit permissions or send a public link to anyone;]]>
+     </string>
+    <string name="app_swiftsync_author">Xiaodong</string>
+    <string name="app_swiftsync_version">2.2.1.458</string>
+
+    <!-- tab info -->
+    <string name="tab_storeshare_photos">Photos</string>
+    <string name="tab_storeshare_music">Music</string>
+    <string name="tab_storeshare_videos">Videos</string>
+    <string name="tab_storeshare_documents">Documents</string>
+
+    <!-- dialog -->
+    <string name="app_name_input_hint">Application name</string>
+    <string name="app_author_input_hint">Author</string>
+    <string name="app_description_input_hint">Description</string>
+    <string name="app_version_input_hint">Version</string>
+    <string name="dialog_title">Add item</string>
+    <string name="edittext_error">Can\'t be empty</string>
+
+    <!-- snack bar -->
+    <string name="text_success">Item added</string>
+    <string name="text_undo">UNDO</string>
+    <string name="name_author_description_error">Application name &#038; Author &#038; Description can\'t be empty</string>
+    <string name="name_author_error">Application name &#038; Author can\'t be empty</string>
+    <string name="name_description_error">Application name &#038; Description can\'t be empty</string>
+    <string name="author_description_error">Author &#038; Description can\'t be empty</string>
+    <string name="name_error">Application name can\'t be empty</string>
+    <string name="author_error">Author can\'t be empty</string>
+    <string name="description_error">Description can\'t be empty</string>
+
 </resources>

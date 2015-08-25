@@ -2,6 +2,7 @@ package com.xiaodong.dream.catcher.demo;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,10 +26,13 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.util.UIUtils;
+import com.xiaodong.dream.catcher.demo.listener.OnSetUpCustomUIListener;
 import com.xiaodong.dream.catcher.demo.manager.ClientManager;
 
 
-public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMainTitleListener {
+public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMainTitleListener,
+        OnSetUpCustomUIListener {
     private static String TAG = "MyActivity";
 
     private Toolbar mToolbar;
@@ -54,6 +58,9 @@ public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMai
 
         //init client manager
         ClientManager.init(this.getApplicationContext());
+
+        //init constants
+        Constants.init(this.getApplicationContext());
 
         initToolbar(savedInstanceState);
 
@@ -139,7 +146,7 @@ public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMai
         }
     }
 
-    private void initContentView(){
+    private void initContentView() {
         Log.i(TAG, ">>initContentView");
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -154,7 +161,7 @@ public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMai
 
                 fragmentClassName = MainConfiguration.getFragmentClassName(identifier);
 
-                if(fragmentClassName == null){
+                if (fragmentClassName == null) {
                     return;
                 }
 
@@ -163,7 +170,7 @@ public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMai
             fragmentTransaction.replace(R.id.main_container, mCurrentFragment, String.valueOf(identifier));
             fragmentTransaction.commit();
 
-            fragmentManager.executePendingTransactions();
+//            fragmentManager.executePendingTransactions();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -174,10 +181,10 @@ public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMai
 
     }
 
-    private void changeFragment(IDrawerItem drawerItem){
+    private void changeFragment(IDrawerItem drawerItem) {
         Log.i(TAG, ">>changeFragment");
 
-        if (drawerItem == null){
+        if (drawerItem == null) {
             return;
         }
 
@@ -186,9 +193,9 @@ public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMai
 
         Fragment fragment = fragmentManager.findFragmentByTag(String.valueOf(drawerItem.getIdentifier()));
 
-        if(fragment != null && fragment == mCurrentFragment){
+        if (fragment != null && fragment == mCurrentFragment) {
             fragmentTransaction.show(fragment);
-        }else {
+        } else {
             try {
                 String fragmentClassName = MainConfiguration.getFragmentClassName(drawerItem.getIdentifier());
 
@@ -241,5 +248,22 @@ public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMai
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onSetUpCustomUI() {
+
+    }
+
+    @Override
+    public void onDeleteToolbarElevation() {
+        if (mToolbar != null && Build.VERSION.SDK_INT >= 21)
+            mToolbar.setElevation(0);
+    }
+
+    @Override
+    public void onRestoreToolbarElevation() {
+        if (mToolbar != null && Build.VERSION.SDK_INT >= 21)
+            mToolbar.setElevation(UIUtils.convertDpToPixel(4.0f, this));
     }
 }

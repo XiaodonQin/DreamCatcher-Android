@@ -28,4 +28,9 @@
         <item name="android:textStyle">bold</item>
         <item name="android:singleLine">true</item>
     </style>
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:background">@color/window_background</item>
+    </style>
 </resources>

@@ -20,9 +20,11 @@
 
     <!--<include layout="@layout/title_bar" />-->
 
-    <LinearLayout android:id="@+id/main_container"
+    <FrameLayout
+        android:id="@+id/main_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 </LinearLayout>
 
