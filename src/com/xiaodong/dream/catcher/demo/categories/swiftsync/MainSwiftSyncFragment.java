@@ -25,6 +25,7 @@ import com.xiaodong.dream.catcher.demo.R;
 import com.xiaodong.dream.catcher.demo.categories.home.AppContent;
 
 import java.util.List;
+
 /**
  * Created by Xiaodong on 2015/8/19.
  */
@@ -98,12 +99,12 @@ public class MainSwiftSyncFragment extends MyFragment implements SwipeRefreshLay
     AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
-            switch (scrollState){
+            switch (scrollState) {
                 case SCROLL_STATE_IDLE:
                     mFabButton.setVisibility(View.VISIBLE);
-                    if(mListView != null && mListView.getFirstVisiblePosition() != 0){
+                    if (mListView != null && mListView.getFirstVisiblePosition() != 0) {
                         mFabButton.setImageDrawable(new IconicsDrawable(mActivity, GoogleMaterial.Icon.gmd_vertical_align_top).color(Color.WHITE).actionBar());
-                    }else {
+                    } else {
                         mFabButton.setImageDrawable(new IconicsDrawable(mActivity, GoogleMaterial.Icon.gmd_refresh).color(Color.WHITE).actionBar());
                     }
                     break;
@@ -130,7 +131,7 @@ public class MainSwiftSyncFragment extends MyFragment implements SwipeRefreshLay
 //            alert.setMessage("FloatingActionButton (FAB)");
 //            alert.create().show();
 
-            if (mListView != null && mListView.getFirstVisiblePosition() != 0){
+            if (mListView != null && mListView.getFirstVisiblePosition() != 0) {
                 mAppsListViewAdapter.notifyDataSetChanged();
                 Animation fadeIn = AnimationUtils.loadAnimation(mActivity, android.R.anim.fade_in);
                 fadeIn.setDuration(500);
@@ -138,8 +139,9 @@ public class MainSwiftSyncFragment extends MyFragment implements SwipeRefreshLay
                 mListView.setSelection(0);
                 mFabButton.setVisibility(View.VISIBLE);
                 mFabButton.setImageDrawable(new IconicsDrawable(mActivity, GoogleMaterial.Icon.gmd_refresh).color(Color.WHITE).actionBar());
-            }else {
-                onRefresh();
+            } else {
+                if (!mSwipeRefreshLayout.isRefreshing())
+                    onRefresh();
             }
         }
     };
@@ -147,7 +149,7 @@ public class MainSwiftSyncFragment extends MyFragment implements SwipeRefreshLay
     Runnable mRunable = new Runnable() {
         @Override
         public void run() {
-            if (mAppsListViewAdapter != null){
+            if (mAppsListViewAdapter != null) {
 
                 Animation fadeIn = AnimationUtils.loadAnimation(mActivity, android.R.anim.slide_in_left);
                 fadeIn.setDuration(500);
