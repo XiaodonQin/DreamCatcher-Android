@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package com.xiaodong.dream.catcher.demo.utils;
+package com.xiaodong.dream.catcher.demo.image;
 
 import android.annotation.TargetApi;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
+
+import com.xiaodong.dream.catcher.demo.utils.Utils;
 
 import java.util.ArrayDeque;
 import java.util.concurrent.BlockingQueue;
@@ -285,7 +287,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
          */
         RUNNING,
         /**
-         * Indicates that {@link com.xiaodong.dream.catcher.demo.utils.AsyncTask#onPostExecute} has finished.
+         * Indicates that {@link AsyncTask#onPostExecute} has finished.
          */
         FINISHED,
     }
@@ -551,7 +553,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
      * @return This instance of AsyncTask.
      *
      * @throws IllegalStateException If {@link #getStatus()} returns either
-     *         {@link com.xiaodong.dream.catcher.demo.utils.AsyncTask.Status#RUNNING} or {@link com.xiaodong.dream.catcher.demo.utils.AsyncTask.Status#FINISHED}.
+     *         {@link AsyncTask.Status#RUNNING} or {@link AsyncTask.Status#FINISHED}.
      *
      * @see #executeOnExecutor(java.util.concurrent.Executor, Object[])
      * @see #execute(Runnable)
@@ -589,7 +591,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
      * @return This instance of AsyncTask.
      *
      * @throws IllegalStateException If {@link #getStatus()} returns either
-     *         {@link com.xiaodong.dream.catcher.demo.utils.AsyncTask.Status#RUNNING} or {@link com.xiaodong.dream.catcher.demo.utils.AsyncTask.Status#FINISHED}.
+     *         {@link AsyncTask.Status#RUNNING} or {@link AsyncTask.Status#FINISHED}.
      *
      * @see #execute(Object[])
      */

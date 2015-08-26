@@ -1,5 +1,6 @@
 package com.xiaodong.dream.catcher.demo.categories.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
@@ -25,6 +26,7 @@ public class AppsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
+    private MainHomeFragment mContext;
     private String mVersionName;
     private Integer mVersionCode;
     private Drawable mIcon;
@@ -33,8 +35,9 @@ public class AppsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private boolean header = false;
 
-    public AppsRecyclerViewAdapter() {
+    public AppsRecyclerViewAdapter(MainHomeFragment mContext) {
         super();
+        this.mContext = mContext;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class AppsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int i) {
 
         Context context = viewHolder.itemView.getContext();
 
@@ -71,12 +74,21 @@ public class AppsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         } else if (viewHolder instanceof ItemViewHolder){
             ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
 
-            AppContent appContent = appContentList.get(i);
+            final AppContent appContent = appContentList.get(i);
 
             itemViewHolder.libraryName.setText(appContent.getAppName());
             itemViewHolder.libraryCreator.setText(appContent.getAuthor());
             itemViewHolder.libraryDescription.setText(Html.fromHtml(appContent.getDescription()));
             itemViewHolder.libraryVersion.setText(appContent.getVersion());
+
+            itemViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mContext.showDeleteItemDialog(i);
+
+                    return true;
+                }
+            });
         }
     }
 
@@ -106,6 +118,13 @@ public class AppsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void removeLastItem(){
         if (appContentList != null)
             this.appContentList.remove(appContentList.size() - 1);
+
+        notifyDataSetChanged();
+    }
+
+    public void deleteItem(int position){
+        if (appContentList != null && appContentList.size() > position)
+            this.appContentList.remove(position);
 
         notifyDataSetChanged();
     }

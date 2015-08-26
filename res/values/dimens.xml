@@ -28,4 +28,8 @@
     <dimen name="dialog_layout_padding">24dp</dimen>
 
 
+    <!-- thumbnail -->
+    <dimen name="item_thumbnail_width">112dp</dimen>
+    <dimen name="item_thumbnail_height">149.5dp</dimen>
+
 </resources>

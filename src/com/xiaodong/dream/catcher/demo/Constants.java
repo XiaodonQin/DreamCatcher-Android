@@ -62,10 +62,10 @@ public class Constants {
 
         }
 
-        addItem(R.string.drawer_item_dreamcatcher, R.string.app_swiftsync_author, R.string.about_swiftsync_description_text, R.string.app_swiftsync_version);
-        addItem(R.string.drawer_item_swiftsms, R.string.app_swiftsync_author, R.string.about_swiftsync_description_text, R.string.app_swiftsync_version);
         addItem(R.string.drawer_item_swiftsync, R.string.app_swiftsync_author, R.string.about_swiftsync_description_text, R.string.app_swiftsync_version);
-        addItem(R.string.drawer_item_swiftsync, R.string.app_swiftsync_author, R.string.about_swiftsync_description_text, R.string.app_swiftsync_version);
+        addItem(R.string.drawer_item_swiftsms, R.string.app_swiftsync_author, R.string.about_swiftsms_description_text, R.string.app_swiftsms_version);
+        addItem(R.string.drawer_item_storeshare, R.string.app_swiftsync_author, R.string.about_swiftsync_description_text, R.string.app_storeshare_version);
+        addItem(R.string.drawer_item_swiftmedia, R.string.app_swiftsync_author, R.string.about_swiftsync_description_text, R.string.app_swiftsync_version);
         addItem(R.string.drawer_item_swiftsync, R.string.app_swiftsync_author, R.string.about_swiftsync_description_text, R.string.app_swiftsync_version);
         addItem(R.string.drawer_item_swiftsync, R.string.app_swiftsync_author, R.string.about_swiftsync_description_text, R.string.app_swiftsync_version);
         addItem(R.string.drawer_item_swiftsync, R.string.app_swiftsync_author, R.string.about_swiftsync_description_text, R.string.app_swiftsync_version);
@@ -86,5 +86,10 @@ public class Constants {
         if (appContentList != null)
             appContentList.add(appContent);
     }
+
+    //net status
+    public static final int NET_LINK_TYPE_ERROR = -1;
+    public static final int NET_LINK_TYPE_MOBILE = 0;
+    public static final int NET_LINK_TYPE_WIFI = 1;
 
 }

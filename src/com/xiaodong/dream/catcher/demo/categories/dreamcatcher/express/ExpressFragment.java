@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.xiaodong.dream.catcher.demo.R;
 import com.xiaodong.dream.catcher.demo.categories.dreamcatcher.express.myexpress.MyExpressFragment;
 import com.xiaodong.dream.catcher.demo.categories.dreamcatcher.express.search.SearchExpressFragment;
-import com.xiaodong.dream.catcher.demo.utils.AsyncTask;
+import com.xiaodong.dream.catcher.demo.image.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;

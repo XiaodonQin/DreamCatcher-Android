@@ -56,6 +56,13 @@ public class ClientManager {
         return sInstance;
     }
 
+
+    /*
+      DreamCatcher client
+
+     */
+
+
     public ExpressClient getExpressClient(){
         if (mExpressClient == null){
             synchronized (ClientManager.class){
@@ -72,5 +79,11 @@ public class ClientManager {
 
         return mExpressClient;
     }
+
+
+    /*
+      SwiftMedia client
+
+     */
 
 }

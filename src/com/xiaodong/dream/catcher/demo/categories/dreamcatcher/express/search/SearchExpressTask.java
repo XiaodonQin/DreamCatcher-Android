@@ -6,7 +6,7 @@
 package com.xiaodong.dream.catcher.demo.categories.dreamcatcher.express.search;
 
 import android.app.Activity;
-import com.xiaodong.dream.catcher.demo.utils.AsyncTask;
+import com.xiaodong.dream.catcher.demo.image.AsyncTask;
 import com.xiaodong.dream.catcher.demo.utils.Utils;
 import com.xiaodong.dream.catcher.demo.manager.ClientManager;
 import com.xiaodong.dream.catcher.demo.sdk.client.ExpressClient;

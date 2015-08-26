@@ -85,7 +85,7 @@ public class MainHomeFragment extends MyFragment{
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerViewAdapter = new AppsRecyclerViewAdapter();
+        mRecyclerViewAdapter = new AppsRecyclerViewAdapter(MainHomeFragment.this);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
 
         generateAboutThisAppSection();
@@ -159,7 +159,7 @@ public class MainHomeFragment extends MyFragment{
 
             AlertDialog.Builder builder =
                     new AlertDialog.Builder(mActivity, R.style.AppCompatAlertDialogStyle);
-            builder.setTitle(getString(R.string.dialog_title));
+            builder.setTitle(getString(R.string.dialog_add_item_title));
             builder.setView(dialogView);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -294,6 +294,11 @@ public class MainHomeFragment extends MyFragment{
             mRecyclerViewAdapter.removeLastItem();
     }
 
+    private void deleteItem(int appContentId){
+        if (mRecyclerViewAdapter != null)
+            mRecyclerViewAdapter.deleteItem(appContentId);
+    }
+
     View.OnClickListener onUndoClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -347,6 +352,24 @@ public class MainHomeFragment extends MyFragment{
             return true;
         }
         return false;
+    }
+
+    public void showDeleteItemDialog(final int appContentId){
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(mActivity, R.style.AppCompatAlertDialogStyle);
+        builder.setTitle(getString(R.string.dialog_delete_item_title));
+        builder.setMessage(getString(R.string.dialog_delete_item_message));
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteItem(appContentId);
+            }
+        });//second parameter used for onclicklistener
+        builder.setNegativeButton("Cancel", null);
+        //Show dialog and launch keyboard
+        builder.show().getWindow().setSoftInputMode(WindowManager.LayoutParams
+                .SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
     }
 
     @Override
