@@ -29,6 +29,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.UIUtils;
 import com.xiaodong.dream.catcher.demo.listener.OnSetUpCustomUIListener;
 import com.xiaodong.dream.catcher.demo.manager.ClientManager;
+import com.xiaodong.dream.catcher.demo.manager.LocalCacheManager;
 
 
 public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMainTitleListener,
@@ -58,6 +59,14 @@ public class MyActivity extends AppCompatActivity implements MyFragment.OnSetMai
 
         //init client manager
         ClientManager.init(this.getApplicationContext());
+
+        //init local cache manager
+        LocalCacheManager.init(this.getApplication());
+        try {
+            LocalCacheManager.getInstance().initImageFetcher(this.getApplicationContext(), getSupportFragmentManager());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //init constants
         Constants.init(this.getApplicationContext());

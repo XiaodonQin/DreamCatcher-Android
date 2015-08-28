@@ -299,7 +299,6 @@ public abstract class ImageWorker {
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "doInBackground - finished work");
             }
-
             return bitmap;
         }
 
@@ -381,8 +380,8 @@ public abstract class ImageWorker {
                             new BitmapDrawable(mResources, bitmap)
                     });
             // Set background to loading bitmap
-            imageView.setBackgroundDrawable(
-                    new BitmapDrawable(mResources, mLoadingBitmap));
+//            imageView.setBackgroundDrawable(
+//                    new BitmapDrawable(mResources, mLoadingBitmap));
 
             imageView.setImageDrawable(td);
             td.startTransition(FADE_IN_TIME);

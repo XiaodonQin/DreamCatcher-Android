@@ -251,6 +251,8 @@ public class ImageCache {
                     Log.d(TAG, "Memory cache hit");
                 }
                 return memBitmap;
+            }else {
+                Log.e(TAG, "Can't find Memory cache");
             }
         }
         return null;

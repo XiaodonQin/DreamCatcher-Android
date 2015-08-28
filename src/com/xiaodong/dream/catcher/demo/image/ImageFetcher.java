@@ -44,7 +44,7 @@ import java.net.URL;
  */
 public class ImageFetcher extends ImageResizer {
     private static final String TAG = "ImageFetcher";
-    public static final int CONNECTION_TIME_OUT = 1000;
+    public static final int CONNECTION_TIME_OUT = 2000;
     private static final int HTTP_CACHE_SIZE = 10 * 1024 * 1024; // 10MB
     private static final String HTTP_CACHE_DIR = "http";
     private static final int IO_BUFFER_SIZE = 8 * 1024;

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.mikepenz.materialdrawer.util.UIUtils;
 import com.xiaodong.dream.catcher.demo.BuildConfig;
 import com.xiaodong.dream.catcher.demo.R;
 import com.xiaodong.dream.catcher.demo.image.ImageCache;
@@ -114,17 +115,19 @@ public class LocalCacheManager {
             int height = 0;
             if (ImageUtils.hasIcecreamSandwich()) {
 //
+//                width = display.widthPixels - (int) UIUtils.convertDpToPixel(mContext.getResources().getDimension(R.dimen.activity_horizontal_margin), mContext);
                 width = display.widthPixels;
+
             } else {
                 width = display.widthPixels;
             }
-            height = width * 9 / 16;
+            height = width * 328 / 600;
 
             mPosterImageFetcher = new ImageFetcher(context, width, height, POSTER_HTTP_CACHE_DIR);
             mPosterImageFetcher.setImageFadeIn(true);
             mPosterImageFetcher.setLoadingImage(ImageFetcher.decodeSampledBitmapFromResource(resources, R.drawable.default_poster, width, height));
         } else {
-            mPosterImageFetcher.setExitTasksEarly(true);
+            mPosterImageFetcher.setExitTasksEarly(false);
         }
 
         ImageCache.ImageCacheParams cacheParams =
@@ -133,7 +136,7 @@ public class LocalCacheManager {
         //default memory cache size of 3MB is enough.
         // each 56-56 size is: 56*56*8 = 0.024MB. 3MB will cache 125 bitmaps
 //		cacheParams.memCacheSize = 1024*1024*3;
-        cacheParams.setMemCacheSizePercent(context, 0.10f);
+        cacheParams.setMemCacheSizePercent(context, 0.20f);
         mPosterImageFetcher.addImageCache(fragmentManager, cacheParams);
 
         mPosterImageCache = mPosterImageFetcher.getImageCache();
@@ -142,5 +145,11 @@ public class LocalCacheManager {
 
     }
 
+    public ImageFetcher getPosterImageFetcher() {
+        return mPosterImageFetcher;
+    }
 
+    public ImageFetcher getThumbnailImageFetcher() {
+        return mThumbnailImageFetcher;
+    }
 }
