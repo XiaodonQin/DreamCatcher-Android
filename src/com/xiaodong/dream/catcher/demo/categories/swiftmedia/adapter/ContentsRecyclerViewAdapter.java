@@ -58,6 +58,7 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     private List<MediaCluster> mediaClusterList = new ArrayList<>();
 
     private MainSwiftMediaFragment mContext;
+    private ImageFetcher mThumbnailImageFetcher = null;
 
     private PosterViewPagerAdapter mPosterViewPagerAdapter;
 
@@ -73,6 +74,10 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         mPosterViewPagerAdapter = new PosterViewPagerAdapter(context.getChildFragmentManager());
         inflater = LayoutInflater.from(mContext.getActivity());
         mMainHandler = new Handler();
+
+        LocalCacheManager localCacheManager = LocalCacheManager.getInstance();
+        if (localCacheManager != null)
+            mThumbnailImageFetcher = localCacheManager.getThumbnailImageFetcher();
     }
 
     @Override
@@ -184,37 +189,48 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         notifyDataSetChanged();
     }
 
-    private void setupItemContents(LinearLayout container, List<MediaItem> mediaItemList){
+    private void setupItemContents(LinearLayout container, List<MediaItem> dataList){
 
-        if (container.getChildCount() > 0)
+        if (dataList == null || dataList.size() <= 0){
             container.removeAllViews();
+            return;
+        }
 
-        for (MediaItem mediaItem : mediaItemList){
-            View view = inflater.inflate(R.layout.list_content_item_swiftmedia, null);
-            CardView cardView = (CardView) view;
-            ThumbnailViewHolder thumbnailViewHolder = new ThumbnailViewHolder();
+        CardView cardView;
+        ThumbnailViewHolder thumbnailViewHolder;
 
-            cardView.setCardBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(cardView.getContext(), R.attr.about_libraries_card, R.color.about_libraries_card));
+        int iDataSize = dataList.size();
+        int childViewSize = container.getChildCount();
 
-            thumbnailViewHolder.progressBar = (ProgressBar) cardView.findViewById(R.id.image_progress_bar);
-            thumbnailViewHolder.thumbnail = (ImageView) cardView.findViewById(R.id.imageView);
-            thumbnailViewHolder.itemName = (TextView) cardView.findViewById(R.id.item_name);
-            thumbnailViewHolder.itemName.setTextColor(UIUtils.getThemeColorFromAttrOrRes(cardView.getContext(), R.attr.about_libraries_text_openSource, R.color.about_libraries_text_openSource));
+        // add view in container
+        if (childViewSize < iDataSize){
+            while (childViewSize < iDataSize){
+                cardView = (CardView) inflater.inflate(R.layout.list_content_item_swiftmedia, null);
 
-            container.addView(cardView);
+                thumbnailViewHolder = new ThumbnailViewHolder();
+                thumbnailViewHolder.thumbnail = (ImageView) cardView.findViewById(R.id.imageView);
+                thumbnailViewHolder.itemName = (TextView) cardView.findViewById(R.id.item_name);
+                thumbnailViewHolder.itemName.setTextColor(UIUtils.getThemeColorFromAttrOrRes(cardView.getContext(), R.attr.about_libraries_text_openSource, R.color.about_libraries_text_openSource));
 
-            String mImageUrl = mediaItem.getThumbnailPath();
-
-            if (mImageUrl != null){
-                LocalCacheManager localCacheManager = LocalCacheManager.getInstance();
-                ImageFetcher mThumbnailImageFetcher = null;
-                if (localCacheManager != null)
-                    mThumbnailImageFetcher = localCacheManager.getThumbnailImageFetcher();
-
-                if (mThumbnailImageFetcher != null)
-                    mThumbnailImageFetcher.loadImage(mImageUrl, thumbnailViewHolder.thumbnail);
+                cardView.setTag(thumbnailViewHolder);
+                container.addView(cardView);
+                childViewSize ++;
             }
+        }else {
+            while (childViewSize > iDataSize){
+                container.removeViewAt(0);
+                childViewSize --;
+            }
+        }
 
+        MediaItem mediaItem;
+        //set item image
+        for (int i = 0; i < iDataSize; i++){
+            cardView = (CardView) container.getChildAt(i);
+            thumbnailViewHolder = (ThumbnailViewHolder) cardView.getTag();
+            mediaItem = dataList.get(i);
+
+            mThumbnailImageFetcher.loadImage(mediaItem.getThumbnailPath(), thumbnailViewHolder.thumbnail);
             thumbnailViewHolder.itemName.setText(mediaItem.getName());
         }
 
@@ -334,7 +350,6 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             categoryName = (TextView) itemView.findViewById(R.id.categoryName);
             categoryName.setTextColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_title_openSource, R.color.about_libraries_title_openSource));
             categoryMore = (ImageView) itemView.findViewById(R.id.categoryMore);
-            categoryMore.setImageDrawable(new IconicsDrawable(mContext.getActivity(), GoogleMaterial.Icon.gmd_navigate_next).color(Color.GRAY).actionBarSize());
             libraryDescriptionDivider = itemView.findViewById(R.id.libraryDescriptionDivider);
             libraryDescriptionDivider.setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_dividerLight_openSource, R.color.about_libraries_dividerLight_openSource));
             horizontalScrollView = (HorizontalScrollView) itemView.findViewById(R.id.content_horizontal_scrollview);

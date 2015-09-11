@@ -46,6 +46,9 @@ public class SimpleImageFragmentFactory {
 
             Bundle mArgs = getArguments();
             PosterItem mPosterItem = (PosterItem) mArgs.getSerializable(POSTER_ITEM);
+            if (mPosterItem == null){
+                return mRootView;
+            }
             String mImageUrl = mPosterItem.getPostPath();
 
             if (mImageUrl != null){

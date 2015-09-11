@@ -159,7 +159,18 @@ public class MainViewstreamFragment extends MyFragment implements LoaderManager.
 
     @Override
     public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
 
+        if (mPosterViewPagerAdapter != null){
+            mListView.removeHeaderView(mHeaderView);
+            mPosterViewPagerAdapter.addPosterItems(null);
+        }
+
+        if (mContentsListViewAdapter != null)
+            mContentsListViewAdapter.deleteContent();
+
+        if (mMainHandler != null)
+            mMainHandler.postDelayed(mRunable, 2000);
     }
 
     private void generateAboutThisAppSection() {

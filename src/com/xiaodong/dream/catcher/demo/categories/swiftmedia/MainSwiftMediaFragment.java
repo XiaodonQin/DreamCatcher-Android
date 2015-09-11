@@ -163,7 +163,6 @@ public class MainSwiftMediaFragment extends MyFragment implements LoaderManager.
         public void onClick(View v) {
             if (!mSwipeRefreshLayout.isRefreshing())
                 onRefresh();
-
         }
     };
 

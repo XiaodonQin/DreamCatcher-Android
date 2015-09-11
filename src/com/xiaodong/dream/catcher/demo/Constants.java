@@ -136,6 +136,7 @@ public class Constants {
 
         }
 
+        //270*359
         addMediaItem("Angelababy", "http://img0.bdstatic.com/img/image/6446027056db8afa73b23eaf953dadde1410240902.jpg");
         addMediaItem("Wallace Chung", "http://img0.bdstatic.com/img/image/df7a40feb5204a11ca1d00b75d415c561409125665.jpg");
         addMediaItem("Fan Bingbing", "http://img0.bdstatic.com/img/image/2043d07892fc42f2350bebb36c4b72ce1409212020.jpg");

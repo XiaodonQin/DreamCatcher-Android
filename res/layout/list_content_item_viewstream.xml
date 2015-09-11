@@ -13,7 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/item_cover_padding">
+        android:paddingTop="@dimen/item_cover_padding"
+        android:paddingBottom="@dimen/item_cover_padding"
+        android:paddingLeft="@dimen/item_cover_padding_left"
+        android:paddingRight="@dimen/item_cover_padding_left">
 
         <FrameLayout
             android:layout_width="match_parent"

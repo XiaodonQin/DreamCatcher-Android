@@ -7,6 +7,7 @@
     <dimen name="title_content_padding">0.5dp</dimen>
     <dimen name="fragment_tab_height">30dp</dimen>
     <dimen name="fragment_tab_text_size">16sp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
 
     <!-- express fragment -->
     <dimen name="tab_search_content_padding">10dp</dimen>
@@ -30,7 +31,12 @@
 
     <!-- thumbnail -->
     <dimen name="item_thumbnail_width">112dp</dimen>
-    <dimen name="item_thumbnail_height">149.5dp</dimen>
+    <dimen name="item_thumbnail_height">148.9dp</dimen>
     <dimen name="item_title_width">98dp</dimen>
+
+    <!-- thumbnail -->
+    <dimen name="item_cover_padding">6dp</dimen>
+    <dimen name="item_cover_padding_left">8.8dp</dimen>
+    <dimen name="item_content_padding">6dp</dimen>
 
 </resources>

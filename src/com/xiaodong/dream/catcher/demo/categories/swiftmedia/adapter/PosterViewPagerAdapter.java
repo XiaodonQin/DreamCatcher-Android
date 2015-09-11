@@ -37,8 +37,10 @@ public class PosterViewPagerAdapter extends FragmentPagerAdapter{
     }
 
     public void addPosterItems(List<PosterItem> posterItems){
-        if (posterItemList != null){
+        if (posterItemList != null)
             posterItemList.clear();
+
+        if (posterItemList != null && posterItems != null){
             posterItemList.addAll(posterItems);
         }
 

@@ -80,6 +80,7 @@ public class LocalCacheManager {
     synchronized
     public void initThumbnailImageFetcherAndCache(Context context, FragmentManager fragmentManager) {
 
+        //270*359
         if (mThumbnailImageFetcher == null) {
             Resources resources = context.getResources();
             int width = Math.round(resources.getDimension(R.dimen.item_thumbnail_width));
