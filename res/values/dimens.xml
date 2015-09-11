@@ -31,5 +31,6 @@
     <!-- thumbnail -->
     <dimen name="item_thumbnail_width">112dp</dimen>
     <dimen name="item_thumbnail_height">149.5dp</dimen>
+    <dimen name="item_title_width">98dp</dimen>
 
 </resources>

@@ -27,6 +27,7 @@ import com.xiaodong.dream.catcher.demo.MyFragment;
 import com.xiaodong.dream.catcher.demo.R;
 import com.xiaodong.dream.catcher.demo.categories.home.AppContent;
 import com.xiaodong.dream.catcher.demo.categories.swiftmedia.adapter.ContentsRecyclerViewAdapter;
+import com.xiaodong.dream.catcher.demo.categories.swiftmedia.model.MediaCluster;
 import com.xiaodong.dream.catcher.demo.categories.swiftmedia.model.PosterItem;
 import com.xiaodong.dream.catcher.demo.listener.OnPostAndRemoveRunnableListener;
 
@@ -37,6 +38,7 @@ import java.util.List;
  */
 public class MainSwiftMediaFragment extends MyFragment implements LoaderManager.LoaderCallbacks<List<Object>>,
         SwipeRefreshLayout.OnRefreshListener {
+    private static String TAG = "MainSwiftMediaFragment";
 
     private Activity mActivity;
     private OnSetMainTitleListener onSetMainTitleListener;
@@ -48,8 +50,8 @@ public class MainSwiftMediaFragment extends MyFragment implements LoaderManager.
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ProgressBar mProgressBar;
 
-    private List<AppContent> appContentList;
     private List<PosterItem> posterItemList;
+    private List<MediaCluster> mediaClusterList;
 
     private Handler mMainHandler;
 
@@ -67,8 +69,8 @@ public class MainSwiftMediaFragment extends MyFragment implements LoaderManager.
 
         Constants constants = Constants.getInstance();
 
-        appContentList = constants.appContentList;
         posterItemList = constants.posterItemList;
+        mediaClusterList = constants.mediaClusterList;
 
         mMainHandler = new Handler();
 
@@ -146,8 +148,12 @@ public class MainSwiftMediaFragment extends MyFragment implements LoaderManager.
             if (posterItemList != null)
                 mRecyclerViewAdapter.setHeader(posterItemList);
 
-            if (appContentList != null)
-                mRecyclerViewAdapter.addContent(appContentList);
+            if (mediaClusterList != null && mediaClusterList.size() > 0){
+                mRecyclerViewAdapter.addContent(mediaClusterList);
+                Log.i(TAG, ">>>>mediaClusterList != null");
+            }else {
+                Log.e(TAG, ">>>>mediaClusterList == null OR mediaClusterList.size() == 0");
+            }
 
         }
     }

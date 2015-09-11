@@ -29,7 +29,7 @@ android {
 
     defaultConfig {
         applicationId "com.xiaodong.dream.catcher.demo"
-        minSdkVersion 11
+        minSdkVersion 13
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"

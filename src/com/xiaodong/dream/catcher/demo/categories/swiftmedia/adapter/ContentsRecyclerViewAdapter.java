@@ -1,12 +1,15 @@
 package com.xiaodong.dream.catcher.demo.categories.swiftmedia.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,14 +17,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.util.UIUtils;
 import com.viewpagerindicator.CirclePageIndicator;
+import com.xiaodong.dream.catcher.demo.categories.swiftmedia.model.MediaCluster;
+import com.xiaodong.dream.catcher.demo.categories.swiftmedia.model.MediaItem;
+import com.xiaodong.dream.catcher.demo.image.ImageFetcher;
+import com.xiaodong.dream.catcher.demo.manager.LocalCacheManager;
 import com.xiaodong.dream.catcher.demo.views.CustomViewPager;
 import com.xiaodong.dream.catcher.demo.R;
-import com.xiaodong.dream.catcher.demo.categories.home.AppContent;
 import com.xiaodong.dream.catcher.demo.categories.swiftmedia.MainSwiftMediaFragment;
 import com.xiaodong.dream.catcher.demo.categories.swiftmedia.model.PosterItem;
 import com.xiaodong.dream.catcher.demo.image.ImageUtils;
@@ -44,7 +55,7 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     private boolean header = false;
 
     private List<PosterItem> posterItemList = new ArrayList<>();
-    private List<AppContent> appContentList = new ArrayList<>();
+    private List<MediaCluster> mediaClusterList = new ArrayList<>();
 
     private MainSwiftMediaFragment mContext;
 
@@ -53,11 +64,14 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     private ViewPager mViewPager;
     private Handler mMainHandler;
 
+    private LayoutInflater inflater;
+
 
     public ContentsRecyclerViewAdapter(MainSwiftMediaFragment context) {
         super();
         this.mContext = context;
         mPosterViewPagerAdapter = new PosterViewPagerAdapter(context.getChildFragmentManager());
+        inflater = LayoutInflater.from(mContext.getActivity());
         mMainHandler = new Handler();
     }
 
@@ -109,7 +123,6 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             headerViewHolder.viewPager.setLayoutParams(layoutParams);
 
             headerViewHolder.viewPager.setOnTouchListener(onTouchListener);
-
             headerViewHolder.circlePageIndicator.setViewPager(headerViewHolder.viewPager);
             headerViewHolder.circlePageIndicator.setVisibility(View.VISIBLE);
             headerViewHolder.circlePageIndicator.setOnPageChangeListener(onPageChangeListener);
@@ -119,27 +132,22 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         } else if (viewHolder instanceof ItemViewHolder){
             ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
 
-            final AppContent appContent = appContentList.get(position);
+            final MediaCluster mediaCluster = mediaClusterList.get(position);
 
-            itemViewHolder.libraryName.setText(appContent.getAppName());
-            itemViewHolder.libraryCreator.setText(appContent.getAuthor());
-            itemViewHolder.libraryDescription.setText(Html.fromHtml(appContent.getDescription()));
-            itemViewHolder.libraryVersion.setText(appContent.getVersion());
+            Log.i(TAG, ">>MediaCluster: " + mediaCluster.toString());
 
-            itemViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-//                    mContext.showDeleteItemDialog(i);
+            itemViewHolder.categoryName.setText(mediaCluster.getCategoryName());
+            itemViewHolder.categoryMore.setOnClickListener(onClickListener);
+            itemViewHolder.categoryMore.setTag(mediaCluster);
+            itemViewHolder.horizontalScrollView.setOnTouchListener(onTouchListener);
 
-                    return true;
-                }
-            });
+            setupItemContents(itemViewHolder.itemContentContainer, mediaCluster.getMediaItemList());
         }
     }
 
     @Override
     public int getItemCount() {
-        return appContentList == null? 0:appContentList.size();
+        return mediaClusterList == null? 0:mediaClusterList.size();
     }
 
     @Override
@@ -149,7 +157,7 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
     public void setHeader(List<PosterItem> posterItems){
         this.header = true;
-        appContentList.add(0, null);
+        mediaClusterList.add(0, null);
         if (posterItemList != null){
             posterItemList.clear();
             posterItemList.addAll(posterItems);
@@ -159,16 +167,57 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
     }
 
-    public void addContent(List<AppContent> appContentList){
-        if (appContentList != null)
-            this.appContentList.addAll(appContentList);
+    public void addContent(List<MediaCluster> clusterList){
+        if (mediaClusterList != null){
+            this.mediaClusterList.addAll(clusterList);
+        }else {
+            Log.e(TAG, ">>>mediaClusterList == null");
+        }
+
+        notifyDataSetChanged();
 
     }
 
     public void deleteContent(){
         posterItemList.clear();
-        appContentList.clear();
+        mediaClusterList.clear();
         notifyDataSetChanged();
+    }
+
+    private void setupItemContents(LinearLayout container, List<MediaItem> mediaItemList){
+
+        if (container.getChildCount() > 0)
+            container.removeAllViews();
+
+        for (MediaItem mediaItem : mediaItemList){
+            View view = inflater.inflate(R.layout.list_content_item_swiftmedia, null);
+            CardView cardView = (CardView) view;
+            ThumbnailViewHolder thumbnailViewHolder = new ThumbnailViewHolder();
+
+            cardView.setCardBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(cardView.getContext(), R.attr.about_libraries_card, R.color.about_libraries_card));
+
+            thumbnailViewHolder.progressBar = (ProgressBar) cardView.findViewById(R.id.image_progress_bar);
+            thumbnailViewHolder.thumbnail = (ImageView) cardView.findViewById(R.id.imageView);
+            thumbnailViewHolder.itemName = (TextView) cardView.findViewById(R.id.item_name);
+            thumbnailViewHolder.itemName.setTextColor(UIUtils.getThemeColorFromAttrOrRes(cardView.getContext(), R.attr.about_libraries_text_openSource, R.color.about_libraries_text_openSource));
+
+            container.addView(cardView);
+
+            String mImageUrl = mediaItem.getThumbnailPath();
+
+            if (mImageUrl != null){
+                LocalCacheManager localCacheManager = LocalCacheManager.getInstance();
+                ImageFetcher mThumbnailImageFetcher = null;
+                if (localCacheManager != null)
+                    mThumbnailImageFetcher = localCacheManager.getThumbnailImageFetcher();
+
+                if (mThumbnailImageFetcher != null)
+                    mThumbnailImageFetcher.loadImage(mImageUrl, thumbnailViewHolder.thumbnail);
+            }
+
+            thumbnailViewHolder.itemName.setText(mediaItem.getName());
+        }
+
     }
 
     View.OnTouchListener onTouchListener = new View.OnTouchListener() {
@@ -211,6 +260,25 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     };
 
+    Runnable mViewPagerScrollRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mViewPager != null && posterItemList != null){
+                int currentIndex = mViewPager.getCurrentItem();
+                int posterCount = posterItemList.size();
+                if (currentIndex < posterCount - 1){
+                    mViewPager.setCurrentItem(++currentIndex, true);
+                }else {
+                    mViewPager.setCurrentItem(0, true);
+                }
+
+                mMainHandler.postDelayed(this, POSTER_AUTO_SCROLL_TIME);
+
+            }
+        }
+    };
+
+
     ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -228,21 +296,10 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     };
 
-    Runnable mViewPagerScrollRunnable = new Runnable() {
+    View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
-        public void run() {
-            if (mViewPager != null && posterItemList != null){
-                int currentIndex = mViewPager.getCurrentItem();
-                int posterCount = posterItemList.size();
-                if (currentIndex < posterCount - 1){
-                    mViewPager.setCurrentItem(++currentIndex, true);
-                }else {
-                    mViewPager.setCurrentItem(0, true);
-                }
+        public void onClick(View v) {
 
-                mMainHandler.postDelayed(this, POSTER_AUTO_SCROLL_TIME);
-
-            }
         }
     };
 
@@ -263,40 +320,33 @@ public class ContentsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         CardView card;
 
-        TextView libraryName;
-        TextView libraryCreator;
+        TextView categoryName;
+        ImageView categoryMore;
         View libraryDescriptionDivider;
-        TextView libraryDescription;
-
-        View libraryBottomDivider;
-        View libraryBottomContainer;
-
-        TextView libraryVersion;
-        TextView libraryLicense;
+        HorizontalScrollView horizontalScrollView;
+        LinearLayout itemContentContainer;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             card = (CardView) itemView;
             card.setCardBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_card, R.color.about_libraries_card));
 
-            libraryName = (TextView) itemView.findViewById(R.id.libraryName);
-            libraryName.setTextColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_title_openSource, R.color.about_libraries_title_openSource));
-            libraryCreator = (TextView) itemView.findViewById(R.id.libraryCreator);
-            libraryCreator.setTextColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_text_openSource, R.color.about_libraries_text_openSource));
+            categoryName = (TextView) itemView.findViewById(R.id.categoryName);
+            categoryName.setTextColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_title_openSource, R.color.about_libraries_title_openSource));
+            categoryMore = (ImageView) itemView.findViewById(R.id.categoryMore);
+            categoryMore.setImageDrawable(new IconicsDrawable(mContext.getActivity(), GoogleMaterial.Icon.gmd_navigate_next).color(Color.GRAY).actionBarSize());
             libraryDescriptionDivider = itemView.findViewById(R.id.libraryDescriptionDivider);
             libraryDescriptionDivider.setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_dividerLight_openSource, R.color.about_libraries_dividerLight_openSource));
-            libraryDescription = (TextView) itemView.findViewById(R.id.libraryDescription);
-            libraryDescription.setTextColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_text_openSource, R.color.about_libraries_text_openSource));
-
-            libraryBottomDivider = itemView.findViewById(R.id.libraryBottomDivider);
-            libraryBottomDivider.setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_dividerLight_openSource, R.color.about_libraries_dividerLight_openSource));
-            libraryBottomContainer = itemView.findViewById(R.id.libraryBottomContainer);
-
-            libraryVersion = (TextView) itemView.findViewById(R.id.libraryVersion);
-            libraryVersion.setTextColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_text_openSource, R.color.about_libraries_text_openSource));
-            libraryLicense = (TextView) itemView.findViewById(R.id.libraryLicense);
-            libraryLicense.setTextColor(UIUtils.getThemeColorFromAttrOrRes(itemView.getContext(), R.attr.about_libraries_text_openSource, R.color.about_libraries_text_openSource));
+            horizontalScrollView = (HorizontalScrollView) itemView.findViewById(R.id.content_horizontal_scrollview);
+            itemContentContainer = (LinearLayout) itemView.findViewById(R.id.item_content_container);
         }
+    }
+
+    public class ThumbnailViewHolder{
+        CardView cardView;
+        ImageView thumbnail;
+        ProgressBar progressBar;
+        TextView itemName;
     }
 
     @Override

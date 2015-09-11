@@ -89,7 +89,7 @@ public class LocalCacheManager {
             mThumbnailImageFetcher.setImageFadeIn(true);
             mThumbnailImageFetcher.setLoadingImage(ImageFetcher.decodeSampledBitmapFromResource(resources, R.drawable.default_thumbnail, width, height));
         } else {
-            mThumbnailImageFetcher.setExitTasksEarly(true);
+            mThumbnailImageFetcher.setExitTasksEarly(false);
         }
 
         ImageCache.ImageCacheParams cacheParams =

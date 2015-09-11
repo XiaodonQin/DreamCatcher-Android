@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.xiaodong.dream.catcher.demo.categories.home.AppContent;
+import com.xiaodong.dream.catcher.demo.categories.swiftmedia.model.MediaCluster;
+import com.xiaodong.dream.catcher.demo.categories.swiftmedia.model.MediaItem;
 import com.xiaodong.dream.catcher.demo.categories.swiftmedia.model.PosterItem;
 
 import java.util.ArrayList;
@@ -22,6 +24,9 @@ public class Constants {
     public static List<AppContent> appContentList;
 
     public static List<PosterItem> posterItemList;
+
+    public static List<MediaItem> mediaItemList;
+    public static List<MediaCluster> mediaClusterList;
 
     public static void init(Context context){
         mContext = context;
@@ -50,6 +55,7 @@ public class Constants {
 
         setAppContentList();
         setPosterList();
+        setMediaClusterList();
 
         return sInstance;
     }
@@ -119,6 +125,75 @@ public class Constants {
 
         if (posterItemList != null)
             posterItemList.add(posterItem);
+    }
+
+    private static void setMediaItemList(){
+        if (mediaItemList == null){
+            mediaItemList = new ArrayList<>();
+
+        }else {
+            mediaItemList.clear();
+
+        }
+
+        addMediaItem("Angelababy", "http://img0.bdstatic.com/img/image/6446027056db8afa73b23eaf953dadde1410240902.jpg");
+        addMediaItem("Wallace Chung", "http://img0.bdstatic.com/img/image/df7a40feb5204a11ca1d00b75d415c561409125665.jpg");
+        addMediaItem("Fan Bingbing", "http://img0.bdstatic.com/img/image/2043d07892fc42f2350bebb36c4b72ce1409212020.jpg");
+        addMediaItem("Tiffany Tang", "http://img0.bdstatic.com/img/image/c6774aeee9cc323de700edcf4f2a40781409804177.jpg");
+        addMediaItem("Jay Chou", "http://img0.bdstatic.com/img/image/a033770a5012f2720fc0f0fa17b6323d1408435351.jpg");
+        addMediaItem("Avril Lavigne", "http://img0.bdstatic.com/img/image/98ea1d728b7fc03b6e025f4fe7ece8401409805181.jpg");
+        addMediaItem("Lim YoonA", "http://img0.bdstatic.com/img/image/cabf92e62f1ad8be41844550b90cf0681409304953.jpg");
+        addMediaItem("Hawick Lau", "http://img0.bdstatic.com/img/image/339c36f64e73e791ab3d312a4c090f9f1409801535.jpg");
+        addMediaItem("LUHAN", "http://img0.bdstatic.com/img/image/a93a29d92270b9a3e3e78b6f5b472e1a1408334562.jpg");
+
+    }
+
+    private static void addMediaItem(String name, String thumbnailPath){
+        MediaItem mediaItem = new MediaItem();
+        mediaItem.setName(name);
+        mediaItem.setThumbnailPath(thumbnailPath);
+
+        if (mediaItemList != null)
+            mediaItemList.add(mediaItem);
+    }
+
+    private static void setMediaClusterList(){
+        setMediaItemList();
+
+        if (mediaClusterList == null){
+            mediaClusterList = new ArrayList<>();
+
+        }else {
+            mediaClusterList.clear();
+
+        }
+
+        addMediaCluster("Star");
+        addMediaCluster("Music");
+        addMediaCluster("Movie");
+        addMediaCluster("Star");
+        addMediaCluster("Music");
+        addMediaCluster("Movie");
+        addMediaCluster("Star");
+        addMediaCluster("Music");
+        addMediaCluster("Movie");
+
+    }
+
+    private static void addMediaCluster(String categoryName){
+        MediaCluster mediaCluster = new MediaCluster();
+
+        mediaCluster.setCategoryName(categoryName);
+
+        if (mediaItemList != null && mediaItemList.size() > 0){
+            mediaCluster.setMediaItemList(mediaItemList);
+
+        }else {
+            Log.e(TAG, ">>mediaItemList == null OR mediaItemList.size() == 0");
+        }
+
+        if (mediaClusterList != null)
+            mediaClusterList.add(mediaCluster);
     }
 
 }
